@@ -9,11 +9,11 @@ export default component$(() => {
         <button
             type={"button"}
             class={
-                "flex h-8 w-8 items-center justify-center rounded-full p-2 transition hover:bg-zinc-900/5 dark:hover:bg-white/5"
+                "flex h-8 w-8 items-center justify-center rounded-full transition hover:bg-zinc-900/5 dark:hover:bg-white/5"
             }
             onClick$={toggle}
         >
-            <HiSunSolid class={"h-5 w-5 text-zinc-900 dark:hidden"} />
+            <HiSunSolid class={"h-6 w-6 text-zinc-900 dark:hidden"} />
             <HiMoonOutline class={"hidden h-5 w-5 text-white dark:block"} />
         </button>
     );

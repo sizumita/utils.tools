@@ -1,12 +1,29 @@
-import { component$, Slot } from "@builder.io/qwik";
+import { component$, Slot, useId, useSignal } from "@builder.io/qwik";
 import { Link } from "@builder.io/qwik-city";
 import Logo from "~/media/logo.svg?jsx";
 import ThemeToggle from "~/components/header/themeToggle";
 import Github from "~/components/header/github";
+import { HiBars3Outline } from "@qwikest/icons/heroicons";
+import Mobile from "~/components/sidebar/mobile";
 
 export const HeaderMobileNav = component$(() => {
+    const id = useId();
+    const buttonRef = useSignal<Element>();
+
     return (
         <div class={"flex items-center gap-5 lg:hidden"}>
+            <button
+                ref={buttonRef}
+                class={
+                    "flex h-8 w-8 items-center justify-center rounded-full transition hover:bg-zinc-900/5 dark:hover:bg-white/5"
+                }
+                popovertarget={id}
+            >
+                <HiBars3Outline
+                    class={"h-6 w-6 text-zinc-900 dark:text-white"}
+                />
+            </button>
+            <Mobile id={id} />
             <Link href={"/"} area-label={"Index"}>
                 <Logo class={"h-5 w-auto"} />
             </Link>

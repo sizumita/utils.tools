@@ -1,9 +1,10 @@
-import { component$, Slot, useStyles$ } from "@builder.io/qwik";
+import { component$, Slot } from "@builder.io/qwik";
 import { Link, routeLoader$ } from "@builder.io/qwik-city";
 import type { RequestHandler } from "@builder.io/qwik-city";
 import Logo from "~/media/logo.svg?jsx";
-import styles from "./styles.css?inline";
 import Header from "~/components/header/header";
+import Sidebar from "~/components/sidebar/sidebar";
+import Prose from "~/components/prose/prose";
 
 export const onGet: RequestHandler = async ({ cacheControl }) => {
     // Control caching for this request for best performance and to reduce hosting costs:
@@ -23,11 +24,10 @@ export const useServerTimeLoader = routeLoader$(() => {
 });
 
 export default component$(() => {
-    useStyles$(styles);
     return (
         <div class={"w-full"}>
             <div class={"h-full lg:ml-72 xl:ml-80"}>
-                <div
+                <header
                     class={
                         "contents lg:pointer-events-none lg:fixed lg:inset-0 lg:z-40 lg:flex"
                     }
@@ -48,15 +48,20 @@ export default component$(() => {
                             </Link>
                         </div>
                         <Header />
+                        <Sidebar cls={"hidden lg:mt-10 lg:block"} />
                     </div>
-                </div>
+                </header>
                 <div
                     class={
                         "relative flex h-full flex-col px-4 pt-14 sm:px-6 lg:px-8"
                     }
                 >
                     <main class={"flex-auto"}>
-                        <Slot />
+                        <article class="flex h-full flex-col pb-10 pt-16">
+                            <Prose>
+                                <Slot />
+                            </Prose>
+                        </article>
                     </main>
                 </div>
             </div>

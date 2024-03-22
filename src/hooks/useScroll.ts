@@ -1,4 +1,4 @@
-import { $, useOn, useOnWindow, useStore } from "@builder.io/qwik";
+import { $, useOnWindow, useStore } from "@builder.io/qwik";
 
 export const useScroll = () => {
     const store = useStore({
@@ -7,7 +7,7 @@ export const useScroll = () => {
     });
     useOnWindow(
         "scroll",
-        $((event) => {
+        $(() => {
             store.scrollX = window.scrollX;
             store.scrollY = window.scrollY;
         }),

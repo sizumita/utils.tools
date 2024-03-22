@@ -1,15 +1,40 @@
 import {
-    $,
     component$,
     Slot,
     useContextProvider,
-    useOn,
-    useOnWindow,
     useSignal,
     useVisibleTask$,
 } from "@builder.io/qwik";
-import themeScript from "~/media/theme?raw";
-import { Theme, ThemeContext } from "~/contexts/themeContext";
+import { type Theme, ThemeContext } from "~/contexts/themeContext";
+
+const themeScript = `
+!(function () {
+    const css = document.createElement("style");
+    css.type = "text/css";
+    css.appendChild(
+        document.createTextNode(
+            \`* {
+               -webkit-transition: none !important;
+               -moz-transition: none !important;
+               -o-transition: none !important;
+               -ms-transition: none !important;
+               transition: none !important;
+            }\`,
+        ),
+    );
+    document.head.appendChild(css);
+
+    const e = localStorage.getItem("theme");
+    if (e) {
+        document.documentElement.classList.add(e);
+    } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        document.documentElement.classList.add("dark");
+    }
+
+    const _ = window.getComputedStyle(css).opacity;
+    document.head.removeChild(css);
+})();
+`
 
 export default component$(() => {
     const theme = useSignal<Theme>("light");
@@ -37,7 +62,7 @@ export default component$(() => {
             document.head.appendChild(css);
             const isSystemDark = window.matchMedia(
                 "(prefers-color-scheme: dark)",
-            );
+            ).matches;
             switch (theme.value) {
                 case "dark":
                     if (isSystemDark) {
@@ -48,7 +73,7 @@ export default component$(() => {
                     document.documentElement.classList.add("dark");
                     break;
                 case "light":
-                    if (isSystemDark) {
+                    if (!isSystemDark) {
                         window.localStorage.removeItem("theme");
                     } else {
                         window.localStorage.setItem("theme", "light");
@@ -57,7 +82,7 @@ export default component$(() => {
                     break;
             }
 
-            const _ = window.getComputedStyle(css).opacity;
+            window.getComputedStyle(css).opacity;
             document.head.removeChild(css);
         }
     });

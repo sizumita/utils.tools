@@ -1,8 +1,5 @@
 import {
     component$,
-    useContextProvider,
-    useSignal,
-    useVisibleTask$,
 } from "@builder.io/qwik";
 import {
     QwikCityProvider,
@@ -12,7 +9,6 @@ import {
 import { RouterHead } from "./components/router-head/router-head";
 
 import "./global.css";
-import { Theme, ThemeContext } from "~/contexts/themeContext";
 import ThemeProvider from "~/providers/themeProvider";
 
 export default component$(() => {
