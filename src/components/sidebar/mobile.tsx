@@ -26,7 +26,7 @@ export default component$<{ id: string }>(({ id }) => {
             />
             <div
                 class={
-                    "relative inset-x-0 top-0 h-full w-72 rounded-md bg-white opacity-100 dark:bg-zinc-900"
+                    "relative inset-x-0 top-0 min-h-screen w-72 rounded-md bg-white opacity-100 dark:bg-zinc-900"
                 }
             >
                 <div

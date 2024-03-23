@@ -15,6 +15,7 @@ export const navigation: Array<NavGroup> = [
         links: [
             { title: "Introduction", href: "/" },
             { title: "Discord Bot", href: "/guides/discord-bot" },
+            { title: "Changelog", href: "/guides/changelog" },
         ],
     },
     {

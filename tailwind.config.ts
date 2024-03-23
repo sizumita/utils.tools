@@ -10,7 +10,7 @@ export default {
     theme: {
         colors: {
             ...colors,
-            current: {
+            primary: {
                 50: "#DEEFF1",
                 100: "#ADD5DB",
                 200: "#95C9CF",

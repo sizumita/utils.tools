@@ -34,7 +34,7 @@ const themeScript = `
     const _ = window.getComputedStyle(css).opacity;
     document.head.removeChild(css);
 })();
-`
+`;
 
 export default component$(() => {
     const theme = useSignal<Theme>("light");

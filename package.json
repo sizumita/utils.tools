@@ -1,8 +1,9 @@
 {
-    "name": "my-qwik-basic-starter",
-    "description": "Demo App with Routing built-in (recommended)",
+    "name": "utils-tools",
+    "version": "0.1.0",
+    "description": "The perfect web util tools for everyone.",
     "engines": {
-        "node": ">=15.0.0"
+        "node": ">=20.0.0"
     },
     "private": true,
     "trustedDependencies": [
@@ -28,10 +29,11 @@
         "qwik": "qwik"
     },
     "devDependencies": {
-        "@builder.io/qwik": "^1.4.5",
-        "@builder.io/qwik-city": "^1.4.5",
-        "@builder.io/qwik-react": "0.5.0",
+        "@builder.io/qwik": "1.5.1",
+        "@builder.io/qwik-city": "1.5.1",
+        "@builder.io/qwik-react": "0.5.4",
         "@cloudflare/workers-types": "^4.20240320.1",
+        "@ffmpeg/types": "^0.12.2",
         "@tailwindcss/typography": "^0.5.10",
         "@types/eslint": "^8.56.2",
         "@types/node": "^20.11.6",
@@ -50,13 +52,15 @@
         "tailwindcss": "3.4.1",
         "typescript": "5.4.3",
         "undici": "*",
-        "vite": "^5.0.12",
+        "vite": "5.2.3",
         "vite-tsconfig-paths": "^4.2.1",
-        "wrangler": "^3.0.0"
+        "wrangler": "3.37.0"
     },
     "dependencies": {
+        "@ffmpeg/core": "^0.12.6",
+        "@ffmpeg/ffmpeg": "^0.12.10",
         "@qwikest/icons": "^0.0.13",
         "@tailwindcss/forms": "^0.5.7",
-        "framer-motion": "^11.0.18"
+        "lottie-web": "^5.12.2"
     }
 }

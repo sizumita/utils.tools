@@ -6,7 +6,7 @@ import Header from "~/components/header/header";
 import Sidebar from "~/components/sidebar/sidebar";
 import Prose from "~/components/prose/prose";
 
-export const onGet: RequestHandler = async ({ cacheControl }) => {
+export const onGet: RequestHandler = async ({ cacheControl, headers }) => {
     // Control caching for this request for best performance and to reduce hosting costs:
     // https://qwik.builder.io/docs/caching/
     cacheControl({
@@ -15,6 +15,8 @@ export const onGet: RequestHandler = async ({ cacheControl }) => {
         // Max once every 5 seconds, revalidate on the server to get a fresh version of this page
         maxAge: 5,
     });
+    headers.set("Cross-Origin-Opener-Policy", "same-origin");
+    headers.set("Cross-Origin-Embedder-Policy", "require-corp");
 };
 
 export const useServerTimeLoader = routeLoader$(() => {
