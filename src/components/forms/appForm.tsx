@@ -1,4 +1,4 @@
-import {component$, type QRL, Slot} from "@builder.io/qwik";
+import { component$, type QRL, Slot } from "@builder.io/qwik";
 import {
     type ActionStore,
     Form,
@@ -18,11 +18,18 @@ type Props = {
     >;
 };
 
-export const InnerColumns = component$<{class?: string}>((props) => {
-    return <div class={["col-span-full grid w-full gap-x-6 gap-y-8 sm:grid-cols-6 -mt-2", props.class]}>
-        <Slot />
-    </div>
-})
+export const InnerColumns = component$<{ class?: string }>((props) => {
+    return (
+        <div
+            class={[
+                "col-span-full -mt-2 grid w-full gap-x-6 gap-y-8 sm:grid-cols-6",
+                props.class,
+            ]}
+        >
+            <Slot />
+        </div>
+    );
+});
 
 export default component$<Props>((props) => {
     return (

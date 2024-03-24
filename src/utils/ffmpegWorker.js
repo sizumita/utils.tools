@@ -59,7 +59,7 @@ const load = async ({
     workerURL: _workerURL,
 }) => {
     const first = !ffmpeg;
-    console.log("loading")
+    console.log("loading");
     try {
         if (!_coreURL) _coreURL = CORE_URL;
         // when web worker type is `classic`.
@@ -73,7 +73,7 @@ const load = async ({
         }
     }
     const coreURL = _coreURL;
-    const wasmURL = _wasmURL
+    const wasmURL = _wasmURL;
     ffmpeg = await self.createFFmpegCore({
         // Fix `Overload resolution failed.` when using multi-threaded ffmpeg-core.
         // Encoded wasmURL and workerURL in the URL as a hack to fix locateFile issue.
@@ -198,4 +198,4 @@ self.onmessage = async ({ data: { id, type, data: _data } }) => {
     self.postMessage({ id, type, data }, trans);
 };
 
-export default import.meta.url
+export default import.meta.url;

@@ -4,9 +4,9 @@ export default component$(() => {
     return (
         <div
             class={[
-                "not-prose bg-zinc-50 rounded-md sm:rounded-xl dark:bg-white/2.5",
+                "not-prose rounded-md bg-zinc-50 sm:rounded-xl dark:bg-white/2.5",
                 "shadow-sm ring-1 ring-gray-900/5 dark:ring-white/10",
-                "dark:text-zinc-200 my-4",
+                "my-4 dark:text-zinc-200",
             ]}
         >
             <Slot />

@@ -1,7 +1,12 @@
-import { $, type NoSerialize, noSerialize, type QRL, useStore } from "@builder.io/qwik";
+import {
+    $,
+    type NoSerialize,
+    noSerialize,
+    type QRL,
+    useStore,
+} from "@builder.io/qwik";
 import { FFmpeg } from "@ffmpeg/ffmpeg";
 import classWorkerURL from "../utils/ffmpegWorker.js?url";
-
 
 type FfmpegStore = {
     ref: NoSerialize<FFmpeg>;
@@ -27,55 +32,75 @@ type FfmpegStore = {
 };
 
 const getBlobUrl = async (url: string) => {
-    const response = await fetch(url)
-    const blob = await response.blob()
-    return URL.createObjectURL(blob)
-}
+    const response = await fetch(url);
+    const blob = await response.blob();
+    return URL.createObjectURL(blob);
+};
 
 export type Clip = {
-    start: number
-    length: number
-}
+    start: number;
+    length: number;
+};
 
 export class FFmpegCommandBuilder {
-    private speed: number | null = null
-    private noAudio: boolean | null = null
-    private clip: Clip | null = null
+    private speed: number | null = null;
+    private noAudio: boolean | null = null;
+    private clip: Clip | null = null;
 
-    constructor(private filename: string, private outputExtension: string, private outputFilename: string) {
-    }
+    constructor(
+        private filename: string,
+        private outputExtension: string,
+        private outputFilename: string,
+    ) {}
 
     setSpeed(speed: number) {
-        this.speed = speed
+        this.speed = speed;
     }
 
     setNoAudio(value: boolean) {
-        this.noAudio = value
+        this.noAudio = value;
     }
 
     setClip(value: Clip) {
-        this.clip = value
+        this.clip = value;
     }
 
     isSameExtension() {
-        return this.filename.endsWith(this.outputExtension) && this.outputFilename.endsWith(this.outputExtension)
+        return (
+            this.filename.endsWith(this.outputExtension) &&
+            this.outputFilename.endsWith(this.outputExtension)
+        );
     }
 
     build() {
-        let args = ["-i", this.filename]
+        let args = ["-i", this.filename];
         if (this.clip !== null) {
             if (this.isSameExtension()) {
-                args = ["-ss", this.clip.start.toString(), "-i", this.filename, "-vcodec", "copy", "-t", this.clip.length.toString()]
+                args = [
+                    "-ss",
+                    this.clip.start.toString(),
+                    "-i",
+                    this.filename,
+                    "-vcodec",
+                    "copy",
+                    "-t",
+                    this.clip.length.toString(),
+                ];
             } else {
-                args.push("-ss", this.clip.start.toString(), "-t", this.clip.length.toString())
+                args.push(
+                    "-ss",
+                    this.clip.start.toString(),
+                    "-t",
+                    this.clip.length.toString(),
+                );
             }
         }
         if (this.noAudio) {
-            args.push("-an")
+            args.push("-an");
         }
         if (this.speed !== null && this.speed !== 1) {
-            const fixed = this.speed.toFixed(2)
-            args.push("-vf", `setpts=PTS/${fixed}`, '-af', `atempo=${fixed}`)
+            const fixed = this.speed.toFixed(2);
+            args.push("-vf", `setpts=PTS/${fixed}`, "-af", `atempo=${fixed}`);
         }
         if (this.outputExtension === ".webm" && !this.isSameExtension()) {
             args.push(
@@ -91,13 +116,12 @@ export class FFmpegCommandBuilder {
                 "23",
                 "-threads",
                 "0",
-            )
+            );
         }
-        args.push(this.outputFilename)
-        return args
+        args.push(this.outputFilename);
+        return args;
     }
 }
-
 
 export function useFfmpeg() {
     return useStore<FfmpegStore>({
@@ -106,18 +130,18 @@ export function useFfmpeg() {
         currentMessage: null,
         progress: null,
         load: $(async function (this) {
-            const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/esm'
+            const baseURL = "https://unpkg.com/@ffmpeg/core@0.12.6/dist/esm";
             this.ref = noSerialize(new FFmpeg());
             this.ref!.on("log", ({ message }) => {
                 console.log(message);
                 this.currentMessage = message;
             });
-            this.ref!.on('progress', ({ progress }) => {
-                this.progress = progress
-            })
+            this.ref!.on("progress", ({ progress }) => {
+                this.progress = progress;
+            });
             await this.ref!.load({
                 classWorkerURL,
-                wasmURL: await getBlobUrl(`${baseURL}/ffmpeg-core.wasm`)
+                wasmURL: await getBlobUrl(`${baseURL}/ffmpeg-core.wasm`),
             });
             this.isLoaded = true;
         }),

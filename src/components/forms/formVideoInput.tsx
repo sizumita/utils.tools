@@ -1,4 +1,10 @@
-import { component$, type QRL, useId, useSignal, useStore } from "@builder.io/qwik";
+import {
+    component$,
+    type QRL,
+    useId,
+    useSignal,
+    useStore,
+} from "@builder.io/qwik";
 import { HiPhotoOutline } from "@qwikest/icons/heroicons";
 
 type InputVideo = {
