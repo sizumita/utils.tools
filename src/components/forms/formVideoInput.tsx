@@ -12,7 +12,7 @@ type PreviewProps = {
 
 export const VideoPreview = component$<PreviewProps>((props) => {
     return (
-        <div class={["relative z-50 flex h-full w-full flex-col"]}>
+        <div class={["relative z-20 flex h-full w-full flex-col"]}>
             <label class={"mx-auto text-sm font-semibold"}>{props.name}</label>
             <video
                 class={"mx-auto my-4 max-h-52"}

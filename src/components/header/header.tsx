@@ -11,7 +11,7 @@ export const HeaderMobileNav = component$(() => {
     const buttonRef = useSignal<Element>();
 
     return (
-        <div class={"flex items-center gap-5 lg:hidden"}>
+        <div class={"flex z-50 items-center gap-5 lg:hidden"}>
             <button
                 ref={buttonRef}
                 class={
