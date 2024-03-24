@@ -25,6 +25,12 @@ type FfmpegStore = {
     >;
 };
 
+const getBlobUrl = async (url: string) => {
+    const response = await fetch(url)
+    const blob = await response.blob()
+    return URL.createObjectURL(blob)
+}
+
 
 export function useFfmpeg() {
     return useStore<FfmpegStore>({
@@ -32,6 +38,7 @@ export function useFfmpeg() {
         isLoaded: false,
         currentMessage: null,
         load: $(async function (this) {
+            const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/esm'
             this.ref = noSerialize(new FFmpeg());
             this.ref!.on("log", ({ message }) => {
                 console.log(message);
@@ -39,6 +46,7 @@ export function useFfmpeg() {
             });
             await this.ref!.load({
                 classWorkerURL,
+                wasmURL: await getBlobUrl(`${baseURL}/ffmpeg-core.wasm`)
             });
             this.isLoaded = true;
         }),

@@ -11,7 +11,7 @@
     ],
     "type": "module",
     "scripts": {
-        "build": "qwik build",
+        "build": "qwik build && rm -rf ./dist/build/*.wasm",
         "build.client": "vite build",
         "build.preview": "vite build --ssr src/entry.preview.tsx",
         "build.server": "vite build -c adapters/cloudflare-pages/vite.config.ts",

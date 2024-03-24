@@ -50,7 +50,7 @@ var FFMessageType;
     FFMessageType["MOUNT"] = "MOUNT";
     FFMessageType["UNMOUNT"] = "UNMOUNT";
 })(FFMessageType || (FFMessageType = {}));
-export const CORE_URL = `https://unpkg.com/@ffmpeg/core@${CORE_VERSION}/dist/umd/ffmpeg-core.js`;
+export const CORE_URL = `https://unpkg.com/@ffmpeg/core@${CORE_VERSION}/dist/esm/ffmpeg-core.js`;
 
 let ffmpeg;
 const load = async ({
@@ -73,12 +73,11 @@ const load = async ({
         }
     }
     const coreURL = _coreURL;
-    const wasmURL = new URL("/assets/ffmpeg/ffmpeg-core.wasm", import.meta.url).href
+    const wasmURL = _wasmURL
     ffmpeg = await self.createFFmpegCore({
         // Fix `Overload resolution failed.` when using multi-threaded ffmpeg-core.
         // Encoded wasmURL and workerURL in the URL as a hack to fix locateFile issue.
         mainScriptUrlOrBlob: `${coreURL}#${btoa(JSON.stringify({ wasmURL }))}`,
-        locateFile: (path, _) => new URL(path, import.meta.url).href
     });
     ffmpeg.setLogger((data) =>
         self.postMessage({ type: FFMessageType.LOG, data }),
