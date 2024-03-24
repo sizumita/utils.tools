@@ -22,8 +22,8 @@ export const navigation: Array<NavGroup> = [
         title: "Basic Apps",
         links: [
             {
-                title: "Change Video Extension",
-                href: "/apps/basic/change-video-extension",
+                title: "Edit Video",
+                href: "/apps/basic/edit-video",
             },
         ],
     },

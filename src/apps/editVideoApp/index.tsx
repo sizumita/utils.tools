@@ -8,14 +8,16 @@ import {
     useSignal,
     useStore,
 } from "@builder.io/qwik";
-import AppForm from "~/components/forms/appForm";
+import AppForm, {InnerColumns} from "~/components/forms/appForm";
 import FormVideoInput from "~/components/forms/formVideoInput";
 import FormSelect from "~/components/forms/formSelect";
-import { useFfmpeg } from "~/hooks/useFfmpeg";
+import {FFmpegCommandBuilder, useFfmpeg} from "~/hooks/useFfmpeg";
 import Container from "~/components/container/container";
 import LoadingAnimation from "~/components/animation/loadingAnimation";
 import type { FormSubmitSuccessDetail } from "@builder.io/qwik-city";
 import CheckAnimation from "~/components/animation/checkAnimation";
+import FormIntValue from "~/components/forms/formIntValue";
+import FormCheck from "~/components/forms/formCheck";
 
 enum ProcessState {
     WaitSubmit = "wait_submit",
@@ -82,6 +84,8 @@ type OutputState = {
 
 export default component$(() => {
     const state = useSignal<ProcessState>(ProcessState.WaitSubmit);
+    const isOnClip = useSignal(false)
+    const isNoAudio = useSignal(false)
     const output = useStore<OutputState>({
         file: noSerialize(undefined),
         url: null,
@@ -94,14 +98,16 @@ export default component$(() => {
             form: HTMLFormElement,
         ) => {
             const data = new FormData(form);
-            const extension = data.get("extension") as Extension | null;
-            const video = data.get("input_video") as File | null;
-            if (extension === null || video === null) {
-                return;
-            }
+            const extension = data.get("extension") as Extension
+            const video = data.get("input_video") as File
+            const clipStart = data.get("clip_start") as string
+            const clipLength = data.get("clip_length") as string
+            const speed = data.get("speed") as string
+
             const videoNameSplit = video.name.split(".");
             videoNameSplit.pop();
-            const newVideoName = videoNameSplit.join(".") + extension;
+            const _name = videoNameSplit.join(".") + extension
+            const newVideoName = video.name === _name ? `${videoNameSplit.join(".")}-proceed${extension}` : _name
 
             if (!ffmpeg.isLoaded) {
                 state.value = ProcessState.LoadFFmpeg;
@@ -112,27 +118,14 @@ export default component$(() => {
                 video.name,
                 new Uint8Array(await video.arrayBuffer()),
             );
-            if (extension === ".webm") {
-                await ffmpeg.exec([
-                    "-i",
-                    video.name,
-                    "-fflags",
-                    "+genpts",
-                    "-preset",
-                    "ultrafast",
-                    "-c:v",
-                    "libvpx",
-                    "-c:a",
-                    "libvorbis",
-                    "-crf",
-                    "23",
-                    "-threads",
-                    "0",
-                    newVideoName,
-                ]);
-            } else {
-                await ffmpeg.exec(["-i", video.name, newVideoName]);
-            }
+            const builder = new FFmpegCommandBuilder(video.name, extension, newVideoName)
+            if (speed) builder.setSpeed(Number(speed))
+            if (isOnClip.value && clipStart && clipLength) builder.setClip({start: Number(clipStart), length: Number(clipLength)})
+            if (isNoAudio.value) builder.setNoAudio(true)
+
+            console.log(builder.build())
+
+            await ffmpeg.exec(builder.build());
             const outputFile = new File(
                 [await ffmpeg.readFile(newVideoName)],
                 newVideoName,
@@ -153,6 +146,31 @@ export default component$(() => {
                     title={"Output Extension"}
                     options={extensions}
                 />
+                <InnerColumns>
+                    <FormIntValue
+                        startFirst={true}
+                        name={"speed"}
+                        label={"Video Speed (0.5 to 2.0)"}
+                        max={2}
+                        min={0.5}
+                        step={0.01}
+                        default={"1"}
+                    />
+                </InnerColumns>
+                <FormCheck name={"no_audio"} label={"No Audio"} bind={isNoAudio} description={"Removes audio from the video."} />
+                <FormCheck name={"clip"} label={"Clip Video"} bind={isOnClip} description={"Use the function to crop a video for a specified number of seconds from a specified time."} />
+                <InnerColumns class={isOnClip.value ? "block" : "hidden"}>
+                    <FormIntValue
+                        name={"clip_start"}
+                        label={"Video Start (s)"}
+                        min={0}
+                    />
+                    <FormIntValue
+                        name={"clip_length"}
+                        label={"Clip Length (s)"}
+                        min={1}
+                    />
+                </InnerColumns>
             </AppForm>
             <Container>
                 <div class={"px-4 py-6 sm:p-8"}>
@@ -189,7 +207,7 @@ export default component$(() => {
                                         class={"h-20 w-20 scale-150"}
                                     />
                                     <p class={"my-auto text-lg font-medium"}>
-                                        Processing...
+                                        Processing... ({((ffmpeg.progress ?? 0) * 100).toFixed(2)}%)
                                     </p>
                                 </div>
                                 <FFmpegLastLogView
