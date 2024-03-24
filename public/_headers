@@ -1,4 +1,10 @@
 # https://developers.cloudflare.com/pages/platform/headers/
 
+/assets/*
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp
+
 /build/*
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp
   Cache-Control: public, max-age=31536000, s-maxage=31536000, immutable

@@ -23,7 +23,7 @@
         "fmt.check": "prettier --check .",
         "lint": "eslint \"src/**/*.ts*\"",
         "preview": "pnpm run build && wrangler pages dev ./dist",
-        "serve": "wrangler pages dev ./dist --compatibility-flags=nodejs_als",
+        "serve": "wrangler pages dev ./dist --compatibility-flags=nodejs_compat",
         "start": "vite --open --mode ssr",
         "build-cf-types": "wrangler types",
         "qwik": "qwik"

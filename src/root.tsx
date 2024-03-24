@@ -17,13 +17,6 @@ export default component$(() => {
      * Don't remove the `<head>` and `<body>` elements.
      */
 
-    // useVisibleTask$(() => {
-    //     theme.value = (window.localStorage.getItem("theme") ?? "") as Theme
-    //     if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-    //         theme.value = "dark"
-    //     }
-    // })
-
     return (
         <QwikCityProvider>
             <head>

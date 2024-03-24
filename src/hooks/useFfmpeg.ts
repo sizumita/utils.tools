@@ -1,8 +1,7 @@
 import { $, type NoSerialize, noSerialize, type QRL, useStore } from "@builder.io/qwik";
 import { FFmpeg } from "@ffmpeg/ffmpeg";
-import coreURL from "@ffmpeg/core?url";
-import wasmURL from "@ffmpeg/core/wasm?url";
-import classWorkerURL from "~/utils/ffmpegWorker?url";
+import classWorkerURL from "../utils/ffmpegWorker.js?url";
+
 
 type FfmpegStore = {
     ref: NoSerialize<FFmpeg>;
@@ -39,8 +38,6 @@ export function useFfmpeg() {
                 this.currentMessage = message;
             });
             await this.ref!.load({
-                coreURL,
-                wasmURL,
                 classWorkerURL,
             });
             this.isLoaded = true;

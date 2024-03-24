@@ -154,7 +154,6 @@ export default component$(() => {
                     options={extensions}
                 />
             </AppForm>
-            <h1>Output</h1>
             <Container>
                 <div class={"px-4 py-6 sm:p-8"}>
                     <div class={"flex w-full"}>

@@ -36,6 +36,8 @@ export default defineConfig((): UserConfig => {
         preview: {
             headers: {
                 "Cache-Control": "public, max-age=600",
+                "Cross-Origin-Opener-Policy": "same-origin",
+                "Cross-Origin-Embedder-Policy": "require-corp",
             },
         },
     };

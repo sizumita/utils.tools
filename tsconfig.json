@@ -26,6 +26,5 @@
         }
     },
     "files": ["./.eslintrc.cjs"],
-    "include": ["src", "./*.d.ts", "./*.config.ts"],
-    "exclude": ["node_modules", "src/utils/ffmpegWorker.js"]
+    "include": ["src", "./*.d.ts", "./*.config.ts"]
 }

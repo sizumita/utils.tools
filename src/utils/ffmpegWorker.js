@@ -1,6 +1,3 @@
-/// <reference no-default-lib="true" />
-/// <reference lib="esnext" />
-/// <reference lib="webworker" />
 /// THIS FILE IS FROM https://github.com/ffmpegwasm/ffmpeg.wasm/blob/main/packages/ffmpeg/src/worker.ts
 /// MIT License
 ///
@@ -62,6 +59,7 @@ const load = async ({
     workerURL: _workerURL,
 }) => {
     const first = !ffmpeg;
+    console.log("loading")
     try {
         if (!_coreURL) _coreURL = CORE_URL;
         // when web worker type is `classic`.
@@ -75,14 +73,12 @@ const load = async ({
         }
     }
     const coreURL = _coreURL;
-    const wasmURL = _wasmURL ? _wasmURL : _coreURL.replace(/.js$/g, ".wasm");
-    const workerURL = _workerURL
-        ? _workerURL
-        : _coreURL.replace(/.js$/g, ".worker.js");
+    const wasmURL = new URL("/assets/ffmpeg/ffmpeg-core.wasm", import.meta.url).href
     ffmpeg = await self.createFFmpegCore({
         // Fix `Overload resolution failed.` when using multi-threaded ffmpeg-core.
         // Encoded wasmURL and workerURL in the URL as a hack to fix locateFile issue.
-        mainScriptUrlOrBlob: `${coreURL}#${btoa(JSON.stringify({ wasmURL, workerURL }))}`,
+        mainScriptUrlOrBlob: `${coreURL}#${btoa(JSON.stringify({ wasmURL }))}`,
+        locateFile: (path, _) => new URL(path, import.meta.url).href
     });
     ffmpeg.setLogger((data) =>
         self.postMessage({ type: FFMessageType.LOG, data }),
@@ -203,4 +199,4 @@ self.onmessage = async ({ data: { id, type, data: _data } }) => {
     self.postMessage({ id, type, data }, trans);
 };
 
-export default {};
+export default import.meta.url
