@@ -185,7 +185,7 @@ export default component$(() => {
                 <InnerColumns class={isOnClip.value ? "block" : "hidden"}>
                     <FormIntValue
                         name={"clip_start"}
-                        label={"Video Start (s)"}
+                        label={"Video Start Second (s)"}
                         min={0}
                     />
                     <FormIntValue

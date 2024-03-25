@@ -63,9 +63,12 @@ export default component$<Props>((props) => {
                 Input Image
             </label>
             <div
-                class={
-                    "mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 dark:border-gray-300/25"
-                }
+                class={[
+                    "mt-2 flex justify-center rounded-lg border px-6 py-10",
+                    inputVideo.url === null
+                        ? "border-dashed border-gray-900/25 dark:border-gray-300/25"
+                        : "border-2 border-primary-500 dark:border-primary-300/25",
+                ]}
             >
                 {inputVideo.url && (
                     <VideoPreview
@@ -96,10 +99,10 @@ export default component$<Props>((props) => {
                         <label
                             for={id}
                             class={
-                                "relative cursor-pointer rounded-md font-semibold text-primary-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-primary-600 focus-within:ring-offset-2 hover:text-primary-500"
+                                "relative w-full cursor-pointer rounded-md font-semibold text-primary-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-primary-600 focus-within:ring-offset-2 hover:text-primary-500"
                             }
                         >
-                            <span class={"my-auto"}>
+                            <span class={"mx-auto my-auto text-lg"}>
                                 {props.title ?? "Upload a file"}
                             </span>
                             <input
@@ -126,7 +129,6 @@ export default component$<Props>((props) => {
                                 }}
                             />
                         </label>
-                        <p class="pl-1">or drag and drop</p>
                     </div>
                     <p class="text-xs leading-5">Wav, MP4, WebM, etc</p>
                 </div>
