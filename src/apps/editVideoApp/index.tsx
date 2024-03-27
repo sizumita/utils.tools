@@ -11,7 +11,7 @@ import {
 import AppForm, { InnerColumns } from "~/components/forms/appForm";
 import FormFileInput, { InputType } from "~/components/forms/formFileInput";
 import FormSelect from "~/components/forms/formSelect";
-import { FFmpegCommandBuilder, useFfmpeg } from "~/hooks/useFfmpeg";
+import { FFmpegCommandBuilder, useFfmpeg } from "~/lib/ffmpeg/useFfmpeg";
 import Container from "~/components/container/container";
 import LoadingAnimation from "~/components/animation/loadingAnimation";
 import type { FormSubmitSuccessDetail } from "@builder.io/qwik-city";
@@ -151,7 +151,7 @@ export default component$(() => {
     return (
         <div class={"space-y-6"}>
             <AppForm submit={"Proceed"} onSubmitCompleted$={onSubmit$}>
-                <FormFileInput type={InputType.Image} name={"input_video"} />
+                <FormFileInput type={InputType.Video} name={"input_video"} />
                 <FormSelect
                     name={"extension"}
                     title={"Output Extension"}

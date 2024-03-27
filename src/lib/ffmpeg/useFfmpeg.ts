@@ -6,7 +6,7 @@ import {
     useStore,
 } from "@builder.io/qwik";
 import { FFmpeg } from "@ffmpeg/ffmpeg";
-import classWorkerURL from "../utils/ffmpegWorker.js?url";
+import classWorkerURL from "./ffmpegWorker.js?url";
 
 type FfmpegStore = {
     ref: NoSerialize<FFmpeg>;
