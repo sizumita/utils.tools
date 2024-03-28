@@ -84,8 +84,6 @@ type OutputState = {
 
 export default component$(() => {
     const state = useSignal<ProcessState>(ProcessState.WaitSubmit);
-    const isOnClip = useSignal(false);
-    const isNoAudio = useSignal(false);
     const output = useStore<OutputState>({
         file: noSerialize(undefined),
         url: null,
@@ -94,7 +92,7 @@ export default component$(() => {
 
     const onSubmit$ = $(
         async (
-            _: CustomEvent<FormSubmitSuccessDetail<unknown>>,
+            event: CustomEvent<FormSubmitSuccessDetail<unknown>>,
             form: HTMLFormElement,
         ) => {
             const data = new FormData(form);
@@ -103,6 +101,8 @@ export default component$(() => {
             const clipStart = data.get("clip_start") as string;
             const clipLength = data.get("clip_length") as string;
             const speed = data.get("speed") as string;
+            const isOnClip = data.get("clip") === "on"
+            const isNoAudio = data.get("no_audio") === "on"
 
             const videoNameSplit = video.name.split(".");
             videoNameSplit.pop();
@@ -127,12 +127,12 @@ export default component$(() => {
                 newVideoName,
             );
             if (speed) builder.setSpeed(Number(speed));
-            if (isOnClip.value && clipStart && clipLength)
+            if (isOnClip && clipStart && clipLength)
                 builder.setClip({
                     start: Number(clipStart),
                     length: Number(clipLength),
                 });
-            if (isNoAudio.value) builder.setNoAudio(true);
+            if (isNoAudio) builder.setNoAudio(true);
 
             console.log(builder.build());
 
@@ -150,7 +150,7 @@ export default component$(() => {
 
     return (
         <div class={"space-y-6"}>
-            <AppForm submit={"Proceed"} onSubmitCompleted$={onSubmit$}>
+            <AppForm submit={"Process"} onSubmitCompleted$={onSubmit$}>
                 <FormFileInput type={InputType.Video} name={"input_video"} />
                 <FormSelect
                     name={"extension"}
@@ -171,29 +171,28 @@ export default component$(() => {
                 <FormCheck
                     name={"no_audio"}
                     label={"No Audio"}
-                    bind={isNoAudio}
                     description={"Removes audio from the video."}
                 />
                 <FormCheck
                     name={"clip"}
                     label={"Clip Video"}
-                    bind={isOnClip}
                     description={
                         "Use the function to crop a video for a specified number of seconds from a specified time."
                     }
-                />
-                <InnerColumns class={isOnClip.value ? "block" : "hidden"}>
-                    <FormIntValue
-                        name={"clip_start"}
-                        label={"Video Start Second (s)"}
-                        min={0}
-                    />
-                    <FormIntValue
-                        name={"clip_length"}
-                        label={"Clip Length (s)"}
-                        min={1}
-                    />
-                </InnerColumns>
+                >
+                    <InnerColumns>
+                        <FormIntValue
+                            name={"clip_start"}
+                            label={"Video Start Second (s)"}
+                            min={0}
+                        />
+                        <FormIntValue
+                            name={"clip_length"}
+                            label={"Clip Length (s)"}
+                            min={1}
+                        />
+                    </InnerColumns>
+                </FormCheck>
             </AppForm>
             <Container>
                 <div class={"px-4 py-6 sm:p-8"}>
