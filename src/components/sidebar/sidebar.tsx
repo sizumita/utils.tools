@@ -31,8 +31,8 @@ export const navigation: Array<NavGroup> = [
             },
             {
                 title: "Get Reiwa",
-                href: "/apps/basic/reiwa"
-            }
+                href: "/apps/basic/reiwa",
+            },
         ],
     },
 ];

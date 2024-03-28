@@ -30,7 +30,6 @@ type MagickState = {
 }
 
 export const useMagick = () => {
-    const workerRef = useSignal<NoSerialize<Worker>>(undefined);
     const state = useStore<MagickState & MagickWorkerFunctions<MagickState>>({
         ref: noSerialize(undefined),
         isReady: false,
@@ -70,7 +69,7 @@ export const useMagick = () => {
     useVisibleTask$(async ({cleanup}) => {
         await state.init$()
         state.isReady = true
-        cleanup(() => workerRef.value?.terminate())
+        cleanup(() => state.ref?.terminate())
     })
 
     return state

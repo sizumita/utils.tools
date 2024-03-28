@@ -19,18 +19,24 @@ export type MagickWorkerMessage<T> =
     } : T extends MagickWorkerMessageType.Process ? {
         type: T
         data: {
+            file: Blob
+            filename: string
             format: MagickFormat
             resize?: {
                 width: number
                 height: number
             }
             grayscale?: boolean
-            border?: number
+            border?: {
+                size: number
+                color: string
+            }
             charcoal?: boolean
             blur?: boolean
             contrast?: boolean
+            negate?: boolean
             transparent?: {
-                color: MagickColor
+                color: string
                 fuzz: number
             },
             crop?: {
@@ -40,10 +46,13 @@ export type MagickWorkerMessage<T> =
                 height: number
             }
         }
-        output: Uint8Array
+        output: {
+            url: string
+            filename: string
+        }
     } : never
 
-export type MagickMessage<T extends MagickWorkerMessageType> = {
+export type MagickMessage<T extends MagickWorkerMessageType, Data = MagickWorkerMessage<T>["data"]> = {
     output: {
         id: string
         data: MagickWorkerMessage<T>["output"]
@@ -51,7 +60,7 @@ export type MagickMessage<T extends MagickWorkerMessageType> = {
     input: {
         type: T
         id: string
-        data: MagickWorkerMessage<T>["data"]
+        data: Data
     }
 }
 

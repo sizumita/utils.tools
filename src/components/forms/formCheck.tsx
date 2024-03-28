@@ -1,4 +1,4 @@
-import {component$, type Signal, Slot, useId, useSignal} from "@builder.io/qwik";
+import { component$, Slot, useId, useSignal } from "@builder.io/qwik";
 
 type Props = {
     name: string;
@@ -8,7 +8,7 @@ type Props = {
 };
 export default component$<Props>((props) => {
     const id = useId();
-    const isOpen = useSignal(false)
+    const isOpen = useSignal(false);
 
     return (
         <>
@@ -27,15 +27,19 @@ export default component$<Props>((props) => {
                         ]}
                     />
                 </div>
-                <div class="text-sm leading-6">
-                    <label for={id} class="font-medium">
-                        {props.label}
-                    </label>
-                    {props.description && <p>{props.description}</p>}
+                <div class={"space-y-4"}>
+                    <div class="text-sm leading-6">
+                        <label for={id} class="font-medium">
+                            {props.label}
+                        </label>
+                        <Slot name={"description"} />
+                    </div>
+                    {isOpen.value && (
+                        <div class={["hidden [&:has(div)]:block", "space-y-2"]}>
+                            <Slot />
+                        </div>
+                    )}
                 </div>
-            </div>
-            <div class={[isOpen.value ? "hidden [&:has(div)]:block" : "hidden", "col-span-full"]}>
-                <Slot />
             </div>
         </>
     );

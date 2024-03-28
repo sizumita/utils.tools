@@ -18,11 +18,11 @@ type Props = {
     >;
 };
 
-export const InnerColumns = component$<{ class?: string }>((props) => {
+export const FormContainer = component$<{ class?: string }>((props) => {
     return (
         <div
             class={[
-                "col-span-full -mt-2 grid w-full gap-x-6 gap-y-8 sm:grid-cols-6",
+                "col-span-full grid w-full gap-x-6 gap-y-8 sm:grid-cols-6",
                 props.class,
             ]}
         >

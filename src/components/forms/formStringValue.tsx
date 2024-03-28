@@ -1,39 +1,33 @@
 import {
     component$,
     type HTMLInputAutocompleteAttribute,
+    Slot,
     useId,
 } from "@builder.io/qwik";
 
 type Props = {
     name: string;
-    max?: number;
-    min?: number;
     placeholder?: string;
-    label: string;
-    startFirst?: boolean;
     autoComplete?: HTMLInputAutocompleteAttribute;
     required?: boolean;
-    step?: number;
     default?: string;
+    long?: boolean;
 };
 
 export default component$<Props>((props) => {
     const id = useId();
 
     return (
-        <div class={["sm:col-span-2", props.startFirst ? "col-start-1" : ""]}>
+        <div class={[props.long ? "col-span-full" : "sm:col-span-2"]}>
             <label for={id} class="block text-sm font-medium leading-6">
-                {props.label}
+                <Slot />
             </label>
             <div class="mt-2">
                 <input
                     required={props.required}
-                    type={"number"}
+                    type={"text"}
                     name={props.name}
-                    max={props.max}
-                    min={props.min}
                     value={props.default}
-                    step={props.step}
                     placeholder={props.placeholder}
                     id={id}
                     autoComplete={props.autoComplete}

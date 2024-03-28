@@ -8,7 +8,7 @@ import {
     useSignal,
     useStore,
 } from "@builder.io/qwik";
-import AppForm, { InnerColumns } from "~/components/forms/appForm";
+import AppForm, { FormContainer } from "~/components/forms/appForm";
 import FormFileInput, { InputType } from "~/components/forms/formFileInput";
 import FormSelect from "~/components/forms/formSelect";
 import { FFmpegCommandBuilder, useFfmpeg } from "~/lib/ffmpeg/useFfmpeg";
@@ -101,8 +101,8 @@ export default component$(() => {
             const clipStart = data.get("clip_start") as string;
             const clipLength = data.get("clip_length") as string;
             const speed = data.get("speed") as string;
-            const isOnClip = data.get("clip") === "on"
-            const isNoAudio = data.get("no_audio") === "on"
+            const isOnClip = data.get("clip") === "on";
+            const isNoAudio = data.get("no_audio") === "on";
 
             const videoNameSplit = video.name.split(".");
             videoNameSplit.pop();
@@ -157,7 +157,7 @@ export default component$(() => {
                     title={"Output Extension"}
                     options={extensions}
                 />
-                <InnerColumns>
+                <FormContainer>
                     <FormIntValue
                         startFirst={true}
                         name={"speed"}
@@ -167,7 +167,7 @@ export default component$(() => {
                         step={0.01}
                         default={"1"}
                     />
-                </InnerColumns>
+                </FormContainer>
                 <FormCheck
                     name={"no_audio"}
                     label={"No Audio"}
@@ -180,7 +180,7 @@ export default component$(() => {
                         "Use the function to crop a video for a specified number of seconds from a specified time."
                     }
                 >
-                    <InnerColumns>
+                    <FormContainer>
                         <FormIntValue
                             name={"clip_start"}
                             label={"Video Start Second (s)"}
@@ -191,9 +191,10 @@ export default component$(() => {
                             label={"Clip Length (s)"}
                             min={1}
                         />
-                    </InnerColumns>
+                    </FormContainer>
                 </FormCheck>
             </AppForm>
+            <h2>Output</h2>
             <Container>
                 <div class={"px-4 py-6 sm:p-8"}>
                     <div class={"flex w-full"}>
