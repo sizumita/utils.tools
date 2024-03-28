@@ -59,8 +59,10 @@
     "dependencies": {
         "@ffmpeg/core": "^0.12.6",
         "@ffmpeg/ffmpeg": "^0.12.10",
+        "@imagemagick/magick-wasm": "^0.0.28",
         "@qwikest/icons": "^0.0.13",
         "@tailwindcss/forms": "^0.5.7",
         "lottie-web": "^5.12.2"
-    }
+    },
+    "packageManager": "pnpm@8.15.5+sha256.4b4efa12490e5055d59b9b9fc9438b7d581a6b7af3b5675eb5c5f447cee1a589"
 }

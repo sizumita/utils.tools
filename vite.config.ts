@@ -31,7 +31,8 @@ export default defineConfig((): UserConfig => {
             },
         },
         worker: {
-            format: "es"
+            format: "es",
+            plugins: () => [tsconfigPaths()]
         },
         preview: {
             headers: {

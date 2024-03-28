@@ -11,6 +11,9 @@ dependencies:
   '@ffmpeg/ffmpeg':
     specifier: ^0.12.10
     version: 0.12.10
+  '@imagemagick/magick-wasm':
+    specifier: ^0.0.28
+    version: 0.0.28
   '@qwikest/icons':
     specifier: ^0.0.13
     version: 0.0.13(@builder.io/qwik@1.5.1)
@@ -720,6 +723,10 @@ packages:
   /@humanwhocodes/object-schema@2.0.2:
     resolution: {integrity: sha512-6EwiSjwWYP7pTckG6I5eyFANjPhmPjUX9JRLUSfNPC7FX7zK9gyZAfUEaECL6ALTpGX5AjnBq3C9XmVWPitNpw==}
     dev: true
+
+  /@imagemagick/magick-wasm@0.0.28:
+    resolution: {integrity: sha512-qbk5GMXrAOx0HAz3vqewN/h0GNBA/oX33FjBNDzN5CDRR3jhDa9hu+75mURg2XL+JPkacQhWryXgZER/cvi7Vw==}
+    dev: false
 
   /@img/sharp-darwin-arm64@0.33.2:
     resolution: {integrity: sha512-itHBs1rPmsmGF9p4qRe++CzCgd+kFYktnsoR1sbIAfsRMrJZau0Tt1AH9KVnufc2/tU02Gf6Ibujx+15qRE03w==}

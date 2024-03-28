@@ -26,6 +26,10 @@ export const navigation: Array<NavGroup> = [
                 href: "/apps/basic/edit-video",
             },
             {
+                title: "Edit Image",
+                href: "/apps/basic/edit-image",
+            },
+            {
                 title: "Get Reiwa",
                 href: "/apps/basic/reiwa"
             }
