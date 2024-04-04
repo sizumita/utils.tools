@@ -26,7 +26,9 @@
         "serve": "wrangler pages dev ./dist --compatibility-flags=nodejs_compat",
         "start": "vite --open --mode ssr",
         "build-cf-types": "wrangler types",
-        "qwik": "qwik"
+        "qwik": "qwik",
+        "db:generate": "drizzle-kit generate:sqlite",
+        "db:migrate": "wrangler d1 migrations apply utils-tools-db --local"
     },
     "devDependencies": {
         "@builder.io/qwik": "1.5.1",
@@ -34,6 +36,7 @@
         "@builder.io/qwik-react": "0.5.4",
         "@cloudflare/workers-types": "^4.20240320.1",
         "@ffmpeg/types": "^0.12.2",
+        "@simplewebauthn/types": "^9.0.1",
         "@tailwindcss/typography": "^0.5.10",
         "@types/eslint": "^8.56.2",
         "@types/node": "^20.11.6",
@@ -42,6 +45,7 @@
         "@typescript-eslint/eslint-plugin": "^6.19.1",
         "@typescript-eslint/parser": "^6.19.1",
         "autoprefixer": "^10.4.14",
+        "drizzle-kit": "^0.20.14",
         "eslint": "^8.56.0",
         "eslint-plugin-qwik": "^1.4.5",
         "postcss": "^8.4.31",
@@ -54,15 +58,23 @@
         "undici": "*",
         "vite": "5.2.3",
         "vite-tsconfig-paths": "^4.2.1",
-        "wrangler": "3.37.0"
+        "wrangler": "3.39.0"
     },
     "dependencies": {
         "@ffmpeg/core": "^0.12.6",
         "@ffmpeg/ffmpeg": "^0.12.10",
         "@imagemagick/magick-wasm": "^0.0.28",
+        "@modular-forms/qwik": "^0.23.1",
         "@qwikest/icons": "^0.0.13",
+        "@simplewebauthn/browser": "^9.0.1",
+        "@simplewebauthn/server": "^9.0.3",
         "@tailwindcss/forms": "^0.5.7",
-        "lottie-web": "^5.12.2"
+        "@tsndr/cloudflare-worker-jwt": "^2.5.3",
+        "base64url": "^3.0.1",
+        "drizzle-orm": "^0.30.6",
+        "lottie-web": "^5.12.2",
+        "tailwind-variants": "^0.2.1",
+        "valibot": "^0.30.0"
     },
     "packageManager": "pnpm@8.15.5+sha256.4b4efa12490e5055d59b9b9fc9438b7d581a6b7af3b5675eb5c5f447cee1a589"
 }

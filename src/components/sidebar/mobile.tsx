@@ -18,7 +18,7 @@ export default component$<{ id: string }>(({ id }) => {
         >
             <div
                 class={
-                    "absolute -z-50 h-full w-full bg-zinc-200 opacity-80 dark:bg-zinc-700"
+                    "fixed -z-50 h-full w-full bg-zinc-200 opacity-80 dark:bg-zinc-700"
                 }
                 onClick$={() => {
                     ref.value?.hidePopover();
@@ -26,7 +26,7 @@ export default component$<{ id: string }>(({ id }) => {
             />
             <div
                 class={
-                    "relative inset-x-0 top-0 min-h-screen w-72 rounded-md bg-white opacity-100 dark:bg-zinc-900"
+                    "fixed inset-x-0 top-0 min-h-screen w-72 rounded-md bg-white opacity-100 dark:bg-zinc-900"
                 }
             >
                 <div

@@ -1,5 +1,5 @@
 import { component$, Slot, useId, useSignal } from "@builder.io/qwik";
-import { Link } from "@builder.io/qwik-city";
+import {Link, useLocation} from "@builder.io/qwik-city";
 import Logo from "~/media/logo.svg?jsx";
 import ThemeToggle from "~/components/header/themeToggle";
 import Github from "~/components/header/github";
@@ -47,6 +47,8 @@ export const NavItem = component$<{ href: string }>(({ href }) => {
 });
 
 export default component$(() => {
+    const loc = useLocation()
+
     return (
         <div
             class={[
@@ -67,6 +69,9 @@ export default component$(() => {
                 <div class="flex gap-4">
                     <ThemeToggle />
                     <Github />
+                </div>
+                <div class="hidden min-[416px]:contents text-gray-900 dark:text-white">
+                    <Link href={`/auth/login?redirectTo=${btoa(loc.url.href)}`} class={"text-sm"}>Sign in</Link>
                 </div>
             </div>
         </div>

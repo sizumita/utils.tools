@@ -3,6 +3,7 @@ import {
     type HTMLInputAutocompleteAttribute,
     useId,
 } from "@builder.io/qwik";
+import {environment} from "~/lib/tv/environment";
 
 type Props = {
     name: string;
@@ -19,6 +20,8 @@ type Props = {
 
 export default component$<Props>((props) => {
     const id = useId();
+
+    const {text, placeholder, bg, ring} = environment()
 
     return (
         <div class={["sm:col-span-2", props.startFirst ? "col-start-1" : ""]}>
@@ -38,9 +41,8 @@ export default component$<Props>((props) => {
                     id={id}
                     autoComplete={props.autoComplete}
                     class={[
-                        "block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6",
-                        "text-gray-900 ring-gray-900/25 placeholder:text-gray-400 focus:ring-primary-600 dark:ring-gray-300/25",
-                        "dark:bg-white/5 dark:text-white dark:placeholder:text-gray-600 dark:focus:ring-primary-500",
+                        "block w-full rounded-md border-0 py-1.5 shadow-sm sm:text-sm sm:leading-6",
+                        text(), placeholder(), bg(), ring()
                     ]}
                 />
             </div>

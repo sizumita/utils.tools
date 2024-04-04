@@ -1,4 +1,5 @@
 import { component$ } from "@builder.io/qwik";
+import {button} from "~/lib/tv/button";
 
 export default component$<{ title: string }>((props) => {
     return (
@@ -6,8 +7,8 @@ export default component$<{ title: string }>((props) => {
             <button
                 type="submit"
                 class={[
-                    "rounded-md bg-primary-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600",
-                    "transition",
+                    "rounded-md px-3 py-2 text-sm font-semibold shadow-sm",
+                    button({color: "primary", ring: false})
                 ]}
             >
                 {props.title}

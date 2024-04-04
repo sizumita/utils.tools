@@ -8,6 +8,7 @@ import { RouterHead } from "./components/router-head/router-head";
 
 import "./global.css";
 import ThemeProvider from "~/providers/themeProvider";
+import UserProvider from "~/lib/auth/userProvider";
 
 export default component$(() => {
     /**
@@ -32,7 +33,9 @@ export default component$(() => {
                 ]}
             >
                 <ThemeProvider>
-                    <RouterOutlet />
+                    <UserProvider>
+                        <RouterOutlet />
+                    </UserProvider>
                 </ThemeProvider>
             </body>
         </QwikCityProvider>

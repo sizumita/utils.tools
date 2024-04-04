@@ -1,4 +1,5 @@
 import { component$, useId } from "@builder.io/qwik";
+import {button} from "~/lib/tv/button";
 
 type Props = {
     name: string;
@@ -23,9 +24,8 @@ export default component$<Props>((props) => {
                 <label
                     for={id}
                     class={[
-                        "rounded-md px-2.5 py-1.5 text-sm font-semibold shadow-sm ring-1 ring-inset transition hover:cursor-pointer",
-                        "bg-white text-gray-900 ring-gray-300 hover:bg-gray-50",
-                        "dark:bg-white/10 dark:text-white dark:ring-transparent dark:hover:bg-white/20",
+                        "rounded-md px-2.5 py-1.5 text-sm font-semibold shadow-sm hover:cursor-pointer",
+                        button()
                     ]}
                 >
                     Change
