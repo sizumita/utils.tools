@@ -13,6 +13,7 @@ export const serverVerifyRegister = server$(async function (username: string, re
 
         const challenge = await this.platform.env.userChallenges.get(username)
         if (challenge === null) return null
+        await this.platform.env.userChallenges.delete(username)
         try {
             const verification = await verifyRegistrationResponse({
                 response,

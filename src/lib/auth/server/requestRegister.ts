@@ -1,11 +1,11 @@
 import {server$} from "@builder.io/qwik-city";
 import {database} from "~/lib/db";
-import {safeParse} from "valibot/dist";
+import {safeParse} from "valibot";
 import {UsernameSchema} from "~/lib/auth/user";
 import {users} from "~/schema";
 import {eq} from "drizzle-orm";
 import {generateRegistrationOptions} from "@simplewebauthn/server";
-import {RegisterRequestResult, RegisterStatus} from "~/lib/auth/server";
+import {RegisterRequestResult, RegisterStatus, RP_NAME} from "~/lib/auth/server";
 
 export const serverRequestRegister = server$(async function (userName: string): Promise<RegisterRequestResult> {
     const db = database(this.platform.env.DB)
@@ -24,7 +24,7 @@ export const serverRequestRegister = server$(async function (userName: string): 
     }
 
     const options = await generateRegistrationOptions({
-        rpName: "utils.tools",
+        rpName: RP_NAME,
         rpID: this.url.hostname,
         userName,
         userID: userName,
